@@ -9,7 +9,7 @@
         <button :class="{mini: true, unlocked: Decimal.gt(player.stage, 1), locked: Decimal.lte(player.stage, 1)}" @click="prevStage">
             &larr;
         </button>
-        &nbsp;Stage <b>{{getStageName(new Decimal(player.stage))}}</b>
+        &nbsp;Stage <b>{{getStageName(player.stage)}}</b>
         &nbsp;<button :class="{mini: true, unlocked: Decimal.lt(player.stage, player.bestStage), locked: Decimal.gte(player.stage, player.bestStage)}" @click="nextStage">
             &rarr;
         </button><br>

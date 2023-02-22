@@ -39,10 +39,11 @@ export function resetStage() {
 	player.enemyAttacks = 0;
 }
 
-export function getStageName(stage: Decimal) {
+export function getStageName(stage: DecimalSource) {
+	const d = new Decimal(stage);
 	const totalStages = Object.keys(STAGE_DATA).length;
-	const activeStage = stage.sub(stage.sub(1).div(totalStages).floor().times(totalStages));
-	const xFactor = stage.sub(1).div(totalStages).floor();
+	const activeStage = d.sub(d.sub(1).div(totalStages).floor().times(totalStages));
+	const xFactor = d.sub(1).div(totalStages).floor();
 
 	return formatWhole(activeStage) + (xFactor.gt(0) ? ("X" + (xFactor.gt(1) ? formatWhole(xFactor) : "")) : "");
 }
