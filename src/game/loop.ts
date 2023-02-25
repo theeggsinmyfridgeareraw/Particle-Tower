@@ -31,12 +31,6 @@ export function gameLoop(diff: number) {
         }
 		
 		if (Decimal.gte(player.damageDealt, enemyTotalHP.value)) {
-			player.xp = Decimal.add(player.xp, Decimal.mul(enemyData.value.xp, stageData.value.mag).times(xpMult.value));
-			player.damageDealt = 0;
-			player.enemyAttackCooldown = 0;
-			player.enemyAttacks = 0;
-			player.enemiesDefeated = Decimal.add(player.enemiesDefeated, 1);
-			player.damageTaken = player.damageTaken.sub(getTrophyEff(3)).max(0);
 			if ((fromCurrentEnemyData("trophyEff") !== undefined) || (fromCurrentEnemyData("mutates") !== undefined)) {
 				const id = fromCurrentEnemyData("mutates") ?? enemyData.value.id;
 				const gain = trophyMult.value.times(stageData.value.mag).times(enemyData.value.trophyMult ?? 1);
@@ -45,6 +39,12 @@ export function gameLoop(diff: number) {
 					player.trophySac[id] = gain.times(trophySacRatio.value).plus(player.trophySac[id] ?? 0);
 				}
 			}
+			player.xp = Decimal.add(player.xp, Decimal.mul(enemyData.value.xp, stageData.value.mag).times(xpMult.value));
+			player.damageDealt = 0;
+			player.enemyAttackCooldown = 0;
+			player.enemyAttacks = 0;
+			player.enemiesDefeated = Decimal.add(player.enemiesDefeated, 1);
+			player.damageTaken = player.damageTaken.sub(getTrophyEff(3)).max(0);
 			if (player.enemiesDefeated.gte(enemiesInStage.value) && Decimal.eq(player.stage, player.bestStage)) {
 				player.bestStage = Decimal.add(player.bestStage, 1);
 			}
