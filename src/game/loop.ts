@@ -29,6 +29,10 @@ export function gameLoop(diff: number) {
 		if (!(enemyData.value.special.includes("stun") && Math.random()<(.5 * (1 - getTrophyEff(11).toNumber())))) {
             player.attackCooldown = Decimal.add(player.attackCooldown, diff);
         }
+
+		if (enemyData.value.special.includes("regenerator")) {
+			player.damageDealt = Decimal.sub(player.damageDealt, Decimal.mul(0.005, diff).times(enemyTotalHP.value).div(getTrophyEff(8))).max(0)
+		}
 		
 		if (Decimal.gte(player.damageDealt, enemyTotalHP.value)) {
 			if ((fromCurrentEnemyData("trophyEff") !== undefined) || (fromCurrentEnemyData("mutates") !== undefined)) {

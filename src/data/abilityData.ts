@@ -43,5 +43,9 @@ export const ABILITY_DATA: Record<string, AbilityData> = {
     "neutrality": {
         name: "Neutrality",
         desc: "Blocks X% of damage taken. X starts at 0, but increases by 4 every time this enemy attacks."
+    },
+    "regenerator": {
+        name: "Regenerator",
+        desc: "Heals enemy by 0.5% of their total HP every second."
     }
 }

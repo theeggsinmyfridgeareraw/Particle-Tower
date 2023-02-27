@@ -128,7 +128,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
         trophyDesc(b) { return "Divides Enemy SPD by "+format(getTrophyEff(6, b)) },
         trophyEff(x) { return x.div(10).plus(1).log10().plus(1) },
         sacDesc(b) { return "Divides Enemy DMG by "+format(getTrophyEff(6, b))+", but multiplies Enemy SPD by "+format(getTrophyEff(6, b).pow(0.75)) },
-        sacEff(x) { return x.div(1e7).plus(1).log10().plus(1).sqrt() },
+        sacEff(x) { return x.div('1e15').plus(1).log10().plus(1).sqrt() },
         sacReq: 1.6e7,
         stackType: "mult"
     },
@@ -276,7 +276,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
         spd: 20,
         img: "images/w_boson.png",
         special: ["weaken", "extremist"],
-        trophyDesc(b) { return "÷" + format(getTrophyEff(16, b)) + " Enemy DMG, but increase Enemy DMG by 10% whenever the enemy attacks." },
+        trophyDesc(b) { return "÷" + format(getTrophyEff(16, b)) + " Enemy DMG, but increase Enemy DMG by 10% when the enemy attacks." },
         trophyEff(x) { return x.div(2).plus(1).cbrt() },
         sacEff(x) { return x.div("2e10").plus(1).root(4) },
         sacReq: "1.6e10",
@@ -297,21 +297,33 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
         sacReq: "3.2e10",
         stackType: "mult"
     },
-
-    // [PLACEHOLDER ENEMY; for testing mutations]
     18: {
         id: 18,
-        name: "Up Quark α",
-        hp: "1e17",
-        xp: "2e17",
-        dmg: "1e9",
-        spd: 40,
+        name: "Up Antiquark",
+        hp: "1.5e17",
+        xp: "3e17",
+        dmg: "5e9",
+        spd: 75,
         img: "images/up_quark.png",
         special: ["agile", "strengthen"],
-        mutates: 1, // id of mutated
-        filter: "hue-rotate(90deg)", // filters enemy img & name text, only for mutations
-        nameColor: "#CD9DFF", // sets name text initial color (before filters), only for mutations
-        trophyMult: "2e16" // multiplier to trophy gain, only for mutations
+        mutates: 1,
+        filter: "hue-rotate(180deg)",
+        nameColor: "lightblue",
+        trophyMult: "6e16"
+    },
+    19: {
+        id: 19,
+        name: "Strange Antiquark",
+        hp: "7.5e17",
+        xp: "1.5e18",
+        dmg: "2e10",
+        spd: 120,
+        img: "images/strange_quark.png",
+        special: ["weaken", "regenerator"],
+        mutates: 4,
+        filter: "hue-rotate(180deg)",
+        nameColor: "lightblue",
+        trophyMult: "6e16"
     }
 };
 
