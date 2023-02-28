@@ -1,5 +1,8 @@
 import Decimal, { DecimalSource } from "break_eternity.js"
 
+// istg this is bullshit that I have to do this
+const zero = 0;
+
 function toPlaces(x: Decimal, precision: number, maxAccepted: number) {
 	let result = x.toStringWithDecimalPlaces(precision)
 	if (Decimal.gte(result, maxAccepted)) {
@@ -26,7 +29,7 @@ function exponentialFormat(num: Decimal, precision: number): string {
 
 function commaFormat(num: Decimal, precision: number) {
 	if (num === null || num === undefined) return "NaN"
-	if (num.mag < 0.001) return (0).toFixed(precision)
+	if (num.mag < 0.001) return zero.toFixed(precision)
 	return toPlaces(num, precision, 1e9).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
