@@ -2,6 +2,7 @@ import Decimal, { DecimalSource } from "break_eternity.js";
 import { computed } from "vue";
 import { STAGE_DATA } from "../data/stageData";
 import { formatWhole } from "./format";
+import { trySeeEnemy } from "./loop";
 import { player } from "./playerControl";
 
 export const stageData = computed(() => getStageData(player.stage));
@@ -37,6 +38,7 @@ export function resetStage() {
 	player.damageTaken = 0;
 	player.enemyAttackCooldown = 0;
 	player.enemyAttacks = 0;
+	trySeeEnemy();
 }
 
 export function getStageName(stage: DecimalSource) {

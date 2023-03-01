@@ -21,7 +21,10 @@ interface Player {
     bestiaryChosen: Record<number, boolean>,
     bestiaryGenUpgs: Record<number, DecimalSource>,
     trophySac: Record<number, DecimalSource>,
-    trophySacDisabled: Record<number, boolean>
+    trophySacDisabled: Record<number, boolean>,
+	guideRecords: {
+		enemies: Record<number, boolean>
+	}
 }
 
 export function getStartPlayer(): Player {
@@ -43,6 +46,9 @@ export function getStartPlayer(): Player {
 		bestiaryChosen: {},
 		bestiaryGenUpgs: {},
 		trophySac: {},
-		trophySacDisabled: {}
+		trophySacDisabled: {},
+		guideRecords: {
+			enemies: {}
+		}
 	};
 }

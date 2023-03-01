@@ -1,4 +1,4 @@
-import { gameLoop, offGameLoop } from "./loop";
+import { gameLoop, offGameLoop, trySeeEnemy } from "./loop";
 import { getStartPlayer, player } from "./playerControl";
 
 const LOCALSTORAGE_ID = "particleTower";
@@ -10,6 +10,8 @@ export function loadGame() {
 	setInterval(function() { gameLoop(0.05) }, 50);
 	setInterval(function() { offGameLoop(player.offProd ? Math.max((new Date().getTime() - (player.currTime ?? new Date().getTime()))/1000, 0) : 0.05) }, 50);
 	setInterval(function() { if (player.autosave) save(); }, 2500);
+
+	trySeeEnemy();
 }
 
 export function save() {

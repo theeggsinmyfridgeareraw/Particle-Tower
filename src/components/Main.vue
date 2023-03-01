@@ -6,23 +6,31 @@
         HP: <b>{{formatWhole(hp.sub(player.damageTaken).max(0))}} / {{formatWhole(hp)}}</b><br>
         DMG: <b>{{formatWhole(dmg)}}</b>, SPD: <b>{{format(spd)}}</b><br><br><br>
 
-        <button :class="{mini: true, unlocked: Decimal.gt(player.stage, 1), locked: Decimal.lte(player.stage, 1)}" @click="prevStage">
+        <q-btn :style="{ visibility: Decimal.gt(player.stage, 1) ? 'visible' : 'hidden' }" no-caps color="dark" class="mini" @click="prevStage">
             &larr;
-        </button>
+        </q-btn>
         &nbsp;Stage <b>{{getStageName(player.stage)}}</b>
-        &nbsp;<button :class="{mini: true, unlocked: Decimal.lt(player.stage, player.bestStage), locked: Decimal.gte(player.stage, player.bestStage)}" @click="nextStage">
+        &nbsp;<q-btn :style="{ visibility: Decimal.lt(player.stage, player.bestStage) ? 'visible' : 'hidden' }" no-caps color="dark" class="mini" @click="nextStage">
             &rarr;
-        </button><br>
+        </q-btn><br>
         
         Defeated: <b>{{formatWhole(player.enemiesDefeated)}} / {{Decimal.eq(player.stage, player.bestStage) ? formatWhole(enemiesInStage) : "&#8734;"}}</b><br><br>
-        <img :src="enemyData.img" :style="{filter: enemyData.filter ?? 'none'}" style="width: 128px; height: 128px;" /><br>
-        <span :style="{color: enemyData.nameColor ?? 'white', filter: enemyData.filter ?? 'none'}">
-            {{enemyData.name}} {{stageData.rank.gt(1) ? ("[Rk "+ formatWhole(stageData.rank) +"]") : ""}}</span><br>
-        HP: <b>{{formatWhole(Decimal.sub(enemyTotalHP, player.damageDealt).max(0))}} / {{formatWhole(enemyTotalHP)}}</b><br>
-        DMG: <b>{{formatWhole(enemyRealDMG)}}</b>, SPD: <b>{{format(enemyRealSPD)}}</b><br>
-        <span v-if="enemyData.special.length > 0">
-            Abilities: <span v-for="spec in enemyData.special" v-bind:tooltip="ABILITY_DATA[spec].desc">{{ ABILITY_DATA[spec].name }}; </span>
-        </span><br><br>
+        <q-card class="bg-blue-grey-15" style="padding: 5px; max-width: 15em; margin: 0 auto;">
+            <img :src="enemyData.img" :style="{filter: enemyData.filter ?? 'none'}" style="width: 128px; height: 128px; margin: 0 auto;" /><br>
+            <span :style="{color: enemyData.nameColor ?? 'white', filter: enemyData.filter ?? 'none'}">
+                {{enemyData.name}} {{stageData.rank.gt(1) ? ("[Rk "+ formatWhole(stageData.rank) +"]") : ""}}</span><br>
+            HP: <b>{{formatWhole(Decimal.sub(enemyTotalHP, player.damageDealt).max(0))}} / {{formatWhole(enemyTotalHP)}}</b><br>
+            DMG: <b>{{formatWhole(enemyRealDMG)}}</b>, SPD: <b>{{format(enemyRealSPD)}}</b><br>
+            <span v-if="enemyData.special.length > 0">
+                Abilities: <span v-for="spec in enemyData.special">
+                    <q-tooltip class="bg-grey-10" style="font-size: 0.9em;" max-width="15em">
+                        {{ ABILITY_DATA[spec].desc }}
+                    </q-tooltip>
+                    {{ ABILITY_DATA[spec].name }}; 
+                </span>
+            </span>
+        </q-card>
+        <br><br>
     </div>
 </template>
 

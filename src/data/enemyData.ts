@@ -6,6 +6,7 @@ import { getTrophyEff, StackType } from "../game/trophies";
 interface BasicEnemyData {
     id: number,
     name: string,
+    desc?: string,
     hp: DecimalSource,
     xp: DecimalSource,
     dmg: DecimalSource,
@@ -41,6 +42,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
 	1: {
 		id: 1,
 		name: "Up Quark",
+        desc: "May be a weakling, but don't x-pect much until later on...",
 		hp: 5,
 		xp: 1,
 		dmg: 1,
@@ -56,6 +58,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
 	2: {
 		id: 2,
 		name: "Down Quark",
+        desc: "With its quark bretheren, they have discovered a pattern going up, up, down, down. Further research needed.",
 		hp: 15,
 		xp: 4,
 		dmg: 3,
@@ -71,6 +74,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     3: {
         id: 3,
         name: "Charm Quark",
+        desc: "Turns out love is at an elementary level after all. Not that you'd want to fall in love with this one...",
         hp: 40,
         xp: 12,
         dmg: 5,
@@ -225,6 +229,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     13: {
         id: 13,
         name: "Gluon",
+        desc: "Gluons glue on quarks together, to make glued-on hadrons. I'm afraid none of my glue jokes will stick.",
         hp: 122000,
         xp: 150000,
         dmg: 3000,
@@ -321,6 +326,34 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
         img: "images/strange_quark.png",
         special: ["weaken", "regenerator"],
         mutates: 4,
+        filter: "hue-rotate(180deg)",
+        nameColor: "lightblue",
+        trophyMult: "6e16"
+    },
+    20: {
+        id: 20,
+        name: "Charm Antiquark",
+        hp: "1.2e18",
+        xp: "2.5e18",
+        dmg: "2.5e10",
+        spd: 90,
+        img: "images/charm_quark.png",
+        special: ["regenerator", "charm"],
+        mutates: 3,
+        filter: "hue-rotate(180deg)",
+        nameColor: "lightblue",
+        trophyMult: "6e16"
+    },
+    21: {
+        id: 21,
+        name: "Bottom Antiquark",
+        hp: "1.8e18",
+        xp: "4e18",
+        dmg: "3e8",
+        spd: 5,
+        img: "images/bottom_quark.png",
+        special: ["mutator", "extremist"],
+        mutates: 6,
         filter: "hue-rotate(180deg)",
         nameColor: "lightblue",
         trophyMult: "6e16"

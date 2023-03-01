@@ -47,5 +47,9 @@ export const ABILITY_DATA: Record<string, AbilityData> = {
     "regenerator": {
         name: "Regenerator",
         desc: "Heals enemy by 0.5% of their total HP every second."
+    },
+    "charm": {
+        name: "Charm",
+        desc: "Player SPD is slightly reduced every time this enemy attacks."
     }
 }

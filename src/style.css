@@ -1,5 +1,5 @@
-* {
-	font-family: Arvo;
+*:not(.material-icons) {
+	font-family: Arvo !important;
 	text-align: center;
 	transition-duration: 0.2s;
 }
@@ -32,18 +32,19 @@
 
 html, body, #app {
 	overflow-x: hidden;
+	font-size: 14px;
 	min-height: 100%;
 	height: 100%;
 	margin: 0;
 }
 
-.row {
+.nrow {
 	display: flex;
 	justify-content: center;
 	flex-flow: row wrap;
 }
 
-.col {
+.ncol {
 	display: flex;
 	justify-content: center;
 	flex-flow: column wrap;
@@ -69,12 +70,11 @@ html, body, #app {
 }
 
 button {
-	border: solid 3px white;
-	background-color: white;
-    font-size: 14px;
+    font-size: 13px !important;
 	cursor: default;
 	width: 100px;
 	height: 100px;
+	margin: 2px !important;
 }
 
 button.mini {
@@ -110,44 +110,18 @@ button.reallyBig {
 	border-radius: 15%;
 }
 
-.locked {
-	background-color: #820000;
-	color: white;
-	cursor: not-allowed;
-}
-
 .unlocked {
-	background-color: #73755f;
 	color: white;
 	cursor: pointer;
 }
 
 .unlocked:hover {
 	filter: brightness(120%);
-	transform: scale(1.1);
 }
 
 .bought {
-	background-color: #13f23d;
 	color: black;
 	cursor: default;
-}
-
-.rigid {
-	background-color: #85ffc8;
-	border: 1px solid white;
-	border-radius: 0;
-	color: black;
-	font-family: 'Summit';
-	font-size: 42px;
-	height: 150px;
-	width: 300px;
-	cursor: pointer;
-}
-
-.rigid:hover {
-	filter: brightness(1.1);
-	transform: scale(1.1);
 }
 
 .slow {
@@ -199,18 +173,7 @@ button:focus .idloc {
 	opacity: 1;
 }
 
-button.unlocked.options {
-	background-color: #666666;
-}
-
-button.unlocked.trophies {
-	background-color: #006882;
-}
-
 .bestiaryDiv {
-	width: 125px;
-	height: 160px;
-	background-color: #693636;
 	color: white;
 }
 
@@ -221,71 +184,20 @@ button.unlocked.trophies {
 	height: 170px;
 }
 
-button.binary {
-	width: 125px;
-	height: 5em;
-	cursor: pointer;
-}
-button.binary:hover {
-	filter: brightness(1.1);
-}
-
-.enabled {
-	background-color: #008221;
-}
-
-.canbuy {
-	background-color: #008282;
-}
-
-.disabled {
-	background-color: #ffb188;
-}
-
-[tooltip] {
-    position: relative;
-    z-index: 2;
-}
-
-[tooltip]:before,
-[tooltip]:after {
-    visibility: hidden;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
-    opacity: 0;
-    pointer-events: none;
-}
-
-[tooltip]:before {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-bottom: 5px;
-    margin-left: -80px;
-    padding: 7px;
-    width: 160px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background-color: #000;
-    background-color: hsla(0, 0%, 5%, 0.9);
-    color: #fff;
-    content: attr(tooltip);
-	white-space: pre-wrap;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.2;
-    transition-duration: .5s;
-}
-
-[tooltip]:hover:before,
-[tooltip]:hover:after {
-    visibility: visible;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-    filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
-    opacity: 1;
-}
-
 img {
 	transition-duration: 0s !important;
+}
+
+.text-blue-grey-15 {
+	color: #182024 !important;
+}
+.bg-blue-grey-15 {
+	background: #182024 !important;
+}
+
+.text-grey-15 {
+	color: #151515 !important;
+}
+.bg-grey-15 {
+	background: #151515 !important;
 }

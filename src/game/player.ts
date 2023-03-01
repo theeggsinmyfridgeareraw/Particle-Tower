@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { player } from "./playerControl";
 import Decimal, { DecimalSource } from "break_eternity.js";
-import { enemyAtk, enemyBlock, enemyData, enemyTotalHP } from "./enemy";
+import { enemyAtk, enemyBlock, enemyData, enemyRealSPD, enemyTotalHP } from "./enemy";
 import { getTrophyEff } from "./trophies";
 
 export const levelReqData = computed(() => ({
@@ -43,6 +43,8 @@ export const spd = computed(() => {
 	spd = spd.plus(getTrophyEff(1));
 
 	spd = spd.times(getTrophyEff(14));
+
+	if (enemyData.value.special.includes("charm")) spd = spd.div(Decimal.pow(1.1, Decimal.sqrt(player.enemyAttacks)));
 	return spd;
 });
 

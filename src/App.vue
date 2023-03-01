@@ -1,15 +1,17 @@
 <template>
   <div>
     <br>
-    <div class="row">
+    <div class="nrow">
       <div v-for="data in tabData">
-        <button v-if="unref(data.unl)" 
-                :class="{smallw: true, unlocked: true, [data.name.toLowerCase().replaceAll(' ', '_')]: true}" 
-                @click="() => { currentTab = data.name; }">
+        <q-btn no-caps v-if="unref(data.unl)" 
+                :color="data.color"
+                outline
+                class="smallw unlocked" 
+                @click="() => { currentTab = data.name; }" style="font-size: 1em !important; font-weight: bold;">
           {{data.name}}
-        </button>
+        </q-btn>
       </div>
-    </div>
+    </div><br/>
     <component :is="tabData[currentTab].component" />
   </div>
 </template>
@@ -21,7 +23,7 @@ import { currentTab, tabData } from './data/tabData';
 
 <style>
 #app {
-  background-color: black; 
+  background-color: rgb(11, 15, 16); 
   color: white;
 }
 </style>

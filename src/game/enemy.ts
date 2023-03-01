@@ -33,23 +33,24 @@ function adjustEnemyDMG(dmg: DecimalSource) {
 	if (enemyData.value.special.includes("strengthen")) {
         dmg = Decimal.mul(dmg, Decimal.div(player.damageDealt, enemyTotalHP.value ?? 1).times(2).plus(1).pow(3));
     }
-	if (player.bestiaryChosen[16]) dmg = Decimal.mul(dmg, Decimal.pow(1.1, player.enemyAttacks));
 
 	if (enemyData.value.special.includes("mutator")) return dmg;
 
 	dmg = Decimal.div(dmg, getTrophyEff(4));
 	dmg = Decimal.div(dmg, getTrophyEff(16));
 	dmg = Decimal.div(dmg, getTrophyEff(6, 4));
+	if (player.bestiaryChosen[16]) dmg = Decimal.mul(dmg, Decimal.pow(1.1, player.enemyAttacks));
 	return dmg;
 }
 
 function adjustEnemySPD(spd: DecimalSource) {
 	if (player.bestiaryChosen[13]) spd = Decimal.mul(spd, 2);
 
+	spd = Decimal.mul(spd, getTrophyEff(6, 4).pow(0.75));
+
 	if (enemyData.value.special.includes("mutator")) return spd;
 
 	spd = Decimal.div(spd, getTrophyEff(6, 3));
-	spd = Decimal.mul(spd, getTrophyEff(6, 4).pow(0.75));
 	return spd;
 }
 

@@ -52,7 +52,14 @@ export function gameLoop(diff: number) {
 			if (player.enemiesDefeated.gte(enemiesInStage.value) && Decimal.eq(player.stage, player.bestStage)) {
 				player.bestStage = Decimal.add(player.bestStage, 1);
 			}
+			trySeeEnemy();
 		}
+	}
+}
+
+export function trySeeEnemy() {
+	if (!player.guideRecords.enemies[enemyData.value.id]) {
+		player.guideRecords.enemies[enemyData.value.id] = true;
 	}
 }
 

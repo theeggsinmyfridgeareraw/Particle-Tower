@@ -3,24 +3,32 @@
     <br><br>
     <b>Selected: {{formatWhole(bestiaryChosen)}} / {{formatWhole(bestiaryLimit)}}</b>
     <br><br>
-    <div class="row" style="display: flex; margin-bottom: 10px;" v-for="r in Math.ceil(Object.keys(player.bestiary).length/6)">
-        <div v-for="(value, id) in reducedBestiary(r)">
-            <button :class="{bestiaryDiv: true, unlocked: true, enabled: player.bestiaryChosen[id]}" @click="() => toggleTrophy(Number(id))">
-                <h4>{{ENEMY_DATA[id].name}} [{{formatWhole(value)}}]</h4>
-                {{fromEnemyData(id, "trophyDesc")?.(0) ?? "???"}}
-            </button><br>
-            <button v-if="player.bestiary[Number(id)+6]!==undefined" :class="{bestiaryDiv: true, short: true, unlocked: true, canbuy: Decimal.gte(player.bestiary[Number(id)+6]||0, getTrophyGenUpgCost(Number(id)))}" @click="() => buyTrophyGenUpg(Number(id))">
-                <h4 style="margin-top: 2px;">+{{formatWhole(getTrophyGen(Number(id)))}} {{ENEMY_DATA[id].name}} Trophies/sec</h4>
-                Cost: {{formatWhole(getTrophyGenUpgCost(Number(id)))}} {{(ENEMY_DATA[Number(id)+6]!==undefined)?(ENEMY_DATA[Number(id)+6].name+" Trophies"):"???"}}
-            </button><br>
-            <button :tooltip="'Sacrificed Trophies add to Trophy effects, but are permanent (i.e. don\'t have to be selected to work). \n Cost: 50% of Trophies (req amt: ' + formatWhole(trophySacReq(Number(id))) + ') \n Loss Rate: 50%'" v-if="trophySacUnl(Number(id))" :class="{bestiaryDiv: true, tall: true, unlocked: true, canbuy: canTrophySac(Number(id))}" @click="() => trophySac(Number(id))">
-                <h4 style="margin-top: 2px;">{{formatWhole(player.trophySac[id] ?? 0)}} Sacrificed {{ENEMY_DATA[id].name}} Trophies</h4>
-                {{(fromEnemyData(id, "sacDesc") ?? fromEnemyData(id, "trophyDesc"))?.(1) ?? "???"}}
-            </button><br>
-            <button v-if="trophySacUnl(Number(id))" :class="{ binary: true, enabled: !(player.trophySacDisabled[id] ?? false), disabled: player.trophySacDisabled[id] ?? false }" @click="() => toggleSac(Number(id))">
-                {{ player.trophySacDisabled[id] ? "OFF" : "ON" }}
-            </button>
-        </div>
+    <div class="nrow" style="margin-bottom: 10px;" v-for="r in Math.ceil(Object.keys(player.bestiary).length/6)">
+        <q-card v-for="(value, id) in reducedBestiary(r)" class="bg-blue-grey-15 ncol" style="padding: 5px; max-width: 15em; margin-left: 2px; margin-right: 2px;">
+            <b>{{ ENEMY_DATA[id].name }} [{{ formatWhole(value) }}]</b> <span v-if="player.bestiary[Number(id)+6]!==undefined">(+{{formatWhole(getTrophyGen(Number(id)))}}/s)</span>
+            <i>Effect: {{fromEnemyData(id, "trophyDesc")?.(0) ?? "???"}}</i>
+            <q-btn no-caps :color="player.bestiaryChosen[id] ? 'positive' : 'negative'" outline class="unlocked" @click="() => toggleTrophy(Number(id))">
+                {{ player.bestiaryChosen[id] ? 'ON' : 'OFF' }}
+            </q-btn>
+            <q-btn no-caps v-if="player.bestiary[Number(id)+6]!==undefined" :color="Decimal.gte(player.bestiary[Number(id)+6]||0, getTrophyGenUpgCost(Number(id))) ? 'positive' : 'negative'" :class="{short: true, unlocked: true, disabled: Decimal.lt(player.bestiary[Number(id)+6]||0, getTrophyGenUpgCost(Number(id)))}" @click="() => buyTrophyGenUpg(Number(id))">
+                Auto Cost: {{formatWhole(getTrophyGenUpgCost(Number(id)))}} {{(ENEMY_DATA[Number(id)+6]!==undefined)?(ENEMY_DATA[Number(id)+6].name+" Trophies"):"???"}}
+            </q-btn>
+            <div v-if="trophySacUnl(Number(id))">
+                <br/><b>{{formatWhole(player.trophySac[id] ?? 0)}} Sacrificed {{ENEMY_DATA[id].name}} Trophies</b><br/>
+                <i>Effect: {{fromEnemyData(id, "sacDesc")?.(1) ?? fromEnemyData(id, "trophyDesc")?.(1) ?? "???"}}</i><br/>
+                <div class="nrow">
+                    <q-btn no-caps :color="canTrophySac(Number(id)) ? 'positive' : 'negative'" :class="{tall: true, unlocked: true, canbuy: canTrophySac(Number(id)), disabled: !canTrophySac(Number(id)) }" @click="() => trophySac(Number(id))">
+                        <q-tooltip class="bg-grey-10" style="font-size: 0.9em;" max-width="15em">
+                            {{ 'Sacrificed Trophies add to Trophy effects, but are permanent (i.e. don\'t have to be selected to work). \n Cost: 50% of Trophies (req amt: ' + formatWhole(trophySacReq(Number(id))) + ') \n Loss Rate: 50%' }}
+                        </q-tooltip>
+                        Sacrifice
+                    </q-btn>
+                    <q-btn no-caps :color="!(player.trophySacDisabled[id] ?? false) ? 'positive' : 'negative'" outline @click="() => toggleSac(Number(id))">
+                        {{ player.trophySacDisabled[id] ? "OFF" : "ON" }}
+                    </q-btn>
+                </div>
+            </div>
+        </q-card>
     </div>
  </div>
 </template>

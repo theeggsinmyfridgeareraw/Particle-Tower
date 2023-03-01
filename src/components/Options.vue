@@ -1,20 +1,20 @@
 <template>
-    <div class="row">
-        <div class="col">
-            <button class="small unlocked options" @click="() => { player.autosave = !player.autosave }">
+    <div class="nrow">
+        <div class="ncol">
+            <q-btn no-caps outline :color="player.autosave ? 'positive' : 'negative'" class="small unlocked" @click="() => { player.autosave = !player.autosave }">
                 Autosave: {{player.autosave ? "ON" : "OFF"}}
-            </button>
-            <button class="small unlocked options" @click="() => { player.offProd = !player.offProd }">
+            </q-btn>
+            <q-btn no-caps outline :color="player.offProd ? 'positive' : 'negative'" class="small unlocked" @click="() => { player.offProd = !player.offProd }">
                 Offline: {{player.offProd ? "ON" : "OFF"}}
-            </button>
+            </q-btn>
         </div>
-        <div class="col">
-            <button class="small unlocked options" @click="save">Save</button>
-            <button class="small unlocked options" @click="importSave">Import</button>
+        <div class="ncol">
+            <q-btn no-caps outline color="positive" class="small unlocked" @click="save">Save</q-btn>
+            <q-btn no-caps outline color="accent" class="small unlocked" @click="importSave">Import</q-btn>
         </div>
-        <div class="col">
-            <button class="small unlocked" style="background-color: #820000;" @click="hardReset">HARD RESET</button>
-            <button class="small unlocked options" @click="exportSave">Export</button>
+        <div class="ncol">
+            <q-btn no-caps outline color="negative" class="small unlocked" style="background-color: #820000;" @click="hardReset">HARD RESET</q-btn>
+            <q-btn no-caps outline color="accent" class="small unlocked" @click="exportSave">Export</q-btn>
         </div>
     </div>
 </template>
