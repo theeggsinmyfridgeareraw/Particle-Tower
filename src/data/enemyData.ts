@@ -169,6 +169,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     9: {
         id: 9,
         name: "Tau",
+        desc: "Quantum tunneling research shows that about 6.2831853071% of Tau particles came from the Death Star.",
         hp: 440,
         xp: 275,
         dmg: 60,
@@ -199,6 +200,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     11: {
         id: 11,
         name: "Muon Neutrino",
+        desc: "It seems to be gazing directly into your soul. Trouble is, particles don't have eyes.",
         hp: 27500,
         xp: 24000,
         dmg: 1000,
@@ -214,6 +216,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     12: {
         id: 12,
         name: "Tau Neutrino",
+        desc: "A very tiny particle, that has managed to pull three larger ones into its orbit. Is Greek in origin.",
         hp: 47200,
         xp: 42000,
         dmg: 4000,
@@ -260,6 +263,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     15: {
         id: 15,
         name: "Higgs",
+        desc: "At long last, my research is complete, and the ancient scriptures of the supposed \"god particle\" have been deciphered: \"higg\"",
         hp: 999999,
         xp: "2e6",
         dmg: 500,
@@ -305,6 +309,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     18: {
         id: 18,
         name: "Up Antiquark",
+        desc: "Seems this one came from another dimension. We've narrowed it down to eight.",
         hp: "1.5e17",
         xp: "3e17",
         dmg: "5e9",
@@ -319,6 +324,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     19: {
         id: 19,
         name: "Strange Antiquark",
+        desc: "Huh, shouldn't Down Antiquark be next? That's a little strange...",
         hp: "7.5e17",
         xp: "1.5e18",
         dmg: "2e10",
@@ -333,6 +339,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     20: {
         id: 20,
         name: "Charm Antiquark",
+        desc: "Is allegedly the source of all hatred in the world, but emotions aren't controlled solely by a subatomic particle, right?",
         hp: "1.2e18",
         xp: "2.5e18",
         dmg: "2.5e10",
