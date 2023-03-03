@@ -34,12 +34,13 @@ function adjustEnemyDMG(dmg: DecimalSource) {
         dmg = Decimal.mul(dmg, Decimal.div(player.damageDealt, enemyTotalHP.value ?? 1).times(2).plus(1).pow(3));
     }
 
+	if (player.bestiaryChosen[16]) dmg = Decimal.mul(dmg, Decimal.pow(1.1, player.enemyAttacks));
+
 	if (enemyData.value.special.includes("mutator")) return dmg;
 
 	dmg = Decimal.div(dmg, getTrophyEff(4));
 	dmg = Decimal.div(dmg, getTrophyEff(16));
 	dmg = Decimal.div(dmg, getTrophyEff(6, 4));
-	if (player.bestiaryChosen[16]) dmg = Decimal.mul(dmg, Decimal.pow(1.1, player.enemyAttacks));
 	return dmg;
 }
 
