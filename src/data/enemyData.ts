@@ -90,6 +90,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     4: {
         id: 4,
         name: "Strange Quark",
+        desc: "Technically named the \"S-Quark\", this little particle rotates 90 degrees sometimes for literally no reason.",
         hp: 25,
         xp: 8,
         dmg: 4,
@@ -105,6 +106,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     5: {
         id: 5,
         name: "Top Quark",
+        desc: "Not to be confused with up quark, is the blunt \"older sibling\" of the quark family.",
         hp: 100,
         xp: 50,
         dmg: 12,
@@ -123,6 +125,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     6: {
         id: 6,
         name: "Bottom Quark",
+        desc: "The counterpart of the top quark, but isn't its antiparticle. Known to be the most beautiful quark (citation needed).",
         hp: 60,
         xp: 40,
         dmg: 10,
@@ -139,6 +142,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     7: {
         id: 7,
         name: "Electron",
+        desc: "Feels ostracized from the quark community, so it has become a true pessimist.",
         hp: 80,
         xp: 100,
         dmg: 25,
@@ -248,6 +252,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     14: {
         id: 14,
         name: "Photon",
+        desc: "As the source of all light in the world, it can't resist the urge to boast its impact at every chance, even though it basically does nothing.",
         hp: 22000,
         xp: 33000,
         dmg: 2000,
