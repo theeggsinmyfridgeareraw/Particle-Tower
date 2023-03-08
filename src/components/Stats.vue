@@ -28,6 +28,7 @@
                             {{E(id).name}}</span><br>
                         HP: <b>{{formatWhole(E(id).hp)}}</b><br>
                         DMG: <b>{{formatWhole(E(id).dmg)}}</b>, SPD: <b>{{format(E(id).spd)}}</b><br>
+                        XP: <b>{{formatWhole(E(id).xp)}}</b><br/>
                         <span v-if="E(id).special.length > 0">
                             Abilities: <span v-for="spec in E(id).special">
                                 <q-tooltip class="bg-grey-10" style="font-size: 0.9em;" max-width="15em">
