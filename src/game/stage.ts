@@ -13,8 +13,8 @@ export function getStageData(stage: DecimalSource) {
     let activeStage = Decimal.sub(stage, Decimal.sub(stage, 1).div(totalStages).floor().times(totalStages)).toNumber();
 
     let data = STAGE_DATA[activeStage.toString()];
-    let rank = Decimal.sub(stage, 1).div(totalStages).floor().times(Math.floor(totalStages * 2 / 3))
-            .plus(Decimal.sub(stage, 1).sub(totalStages).div(2).floor().max(0))
+    let rank = Decimal.sub(stage, 1).div(totalStages).floor().times(Math.floor(totalStages * 3 / 4))
+            .plus(Decimal.sub(stage, 1).sub(totalStages).times(3 / 4).floor().max(0))
             .plus(data[new Decimal(player.enemiesDefeated).toNumber() % data.length][1]);
 
     let mag = Decimal.pow(2.5, rank.sub(1));
@@ -38,6 +38,7 @@ export function resetStage() {
 	player.damageTaken = 0;
 	player.enemyAttackCooldown = 0;
 	player.enemyAttacks = 0;
+	player.playerAttacks = 0;
 	trySeeEnemy();
 }
 

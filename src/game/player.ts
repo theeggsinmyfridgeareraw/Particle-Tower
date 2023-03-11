@@ -19,6 +19,8 @@ export const hp = computed(() => {
 	let hp = Decimal.pow(1.5, level.value.sub(1).root(1.5)).plus(level.value.sub(2).max(0)).times(10).floor();
 	hp = hp.times(getTrophyEff(5));
 	hp = hp.times(getTrophyEff(17).sub(1).times(level.value).plus(1).max(1));
+
+	if (enemyData.value.special.includes("reductive")) hp = hp.div(Decimal.mul(player.playerAttacks, 1e-6).plus(1));
 	return hp;
 });
 
@@ -35,6 +37,7 @@ export const dmg = computed(() => {
 	if (player.bestiaryChosen[17]) dmg = dmg.div(2);
 
 	if (enemyData.value.special.includes("weaken")) dmg = dmg.div(Decimal.div(player.damageTaken, hp.value ?? 1).times(2).plus(1).pow(3));
+	if (enemyData.value.special.includes("reductive")) dmg = dmg.div(Decimal.mul(player.playerAttacks, 1e-6).plus(1));
 	return dmg;
 });
 
@@ -56,6 +59,7 @@ export function playerAtk(bulk: DecimalSource) {
 	let eDmg = dmg.value.times(bulk).times(isCrit ? critMult.value.max(1).sub(1).div(bulk).plus(1) : 1).times(1 - enemyBlock.value);
 	if (enemyData.value.special.includes("shield") && eDmg.lt(Decimal.div(enemyTotalHP.value, 10)) && !isCrit) eDmg = new Decimal(0);
 	
+	player.playerAttacks = Decimal.add(player.playerAttacks, bulk);
 	player.damageDealt = Decimal.add(player.damageDealt, eDmg);
 	player.attackCooldown = 0;
 

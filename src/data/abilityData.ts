@@ -51,5 +51,9 @@ export const ABILITY_DATA: Record<string, AbilityData> = {
     "charm": {
         name: "Charm",
         desc: "Player SPD is slightly reduced every time this enemy attacks."
+    },
+    "reductive": {
+        name: "Reductive",
+        desc: "Divides player HP & DMG by X. X starts at 1, but increases by a millionth every time the player attacks."
     }
 }

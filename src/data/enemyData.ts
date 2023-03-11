@@ -369,6 +369,21 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
         filter: "hue-rotate(180deg)",
         nameColor: "lightblue",
         trophyMult: "6e16"
+    },
+    22: {
+        id: 22,
+        name: "Down Antiquark",
+        desc: "With order out of the question, this chaotic particle is known to be very toxic. Its ninth-dimensional features have yet to be measured.",
+        hp: "7.5e17",
+        xp: "1.5e18",
+        dmg: "1.5e10",
+        spd: 105,
+        img: "images/down_quark.png",
+        special: ["stun", "reductive"],
+        mutates: 2,
+        filter: "hue-rotate(180deg)",
+        nameColor: "lightblue",
+        trophyMult: "6e16"
     }
 };
 

@@ -47,6 +47,7 @@ export function gameLoop(diff: number) {
 			player.damageDealt = 0;
 			player.enemyAttackCooldown = 0;
 			player.enemyAttacks = 0;
+			player.playerAttacks = 0;
 			player.enemiesDefeated = Decimal.add(player.enemiesDefeated, 1);
 			player.damageTaken = player.damageTaken.sub(getTrophyEff(3)).max(0);
 			if (player.enemiesDefeated.gte(enemiesInStage.value) && Decimal.eq(player.stage, player.bestStage)) {
