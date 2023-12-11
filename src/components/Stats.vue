@@ -57,7 +57,7 @@
                         <q-expansion-item
                         expand-separator
                         :label="data.name"
-                        v-if="data.unl"
+                        v-if="unref(data.unl)"
                         >
                             <q-card class="bg-grey-15">
                             <q-card-section>
@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { ComputedRef, computed, ref } from 'vue';
+import { ComputedRef, computed, ref, unref } from 'vue';
 import { ENEMY_DATA } from '../data/enemyData';
 import { formatWhole, format } from '../game/format';
 import { ABILITY_DATA } from '../data/abilityData';
