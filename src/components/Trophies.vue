@@ -1,7 +1,8 @@
 <template>
  <div>
     <br><br>
-    <b>Selected: {{formatWhole(bestiaryChosen)}} / {{formatWhole(bestiaryLimit)}}</b>
+    <b>Selected: {{formatWhole(bestiaryChosen)}} / {{formatWhole(bestiaryLimit)}}</b><br/>
+    <span style="font-size: 0.95em">Next At: <i>Stage {{ (bestiaryLimit == Object.keys(ENEMY_DATA).length) ? "∞" : formatWhole(nextBestiaryLimit) }} reached</i></span>
     <br><br>
     <div class="nrow" style="margin-bottom: 10px;" v-for="r in Math.ceil(Object.keys(player.bestiary).length/6)">
         <q-card v-for="(value, id) in reducedBestiary(r)" class="bg-blue-grey-15 ncol" style="padding: 5px; max-width: 15em; margin-left: 2px; margin-right: 2px;">
@@ -38,7 +39,7 @@ import { formatWhole } from '../game/format';
 import { player } from '../game/playerControl';
 import { ENEMY_DATA, fromEnemyData } from '../data/enemyData';
 import { trophySacUnl, trophySacReq, canTrophySac, trophySac } from '../game/trophySac';
-import { bestiaryChosen, bestiaryLimit, toggleTrophy, getTrophyGenUpgCost, buyTrophyGenUpg, getTrophyGen } from '../game/trophies';
+import { bestiaryChosen, bestiaryLimit, toggleTrophy, getTrophyGenUpgCost, buyTrophyGenUpg, getTrophyGen, nextBestiaryLimit } from '../game/trophies';
 import Decimal, { DecimalSource } from 'break_eternity.js';
 import { resetStage } from '../game/stage';
 

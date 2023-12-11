@@ -158,6 +158,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     8: {
         id: 8,
         name: "Muon",
+        desc: "Has a much longer lifespan than many other particles, which has made it quite the loner.",
         hp: 500,
         xp: 600,
         dmg: 125,
@@ -189,6 +190,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     10: {
         id: 10,
         name: "Electron Neutrino",
+        desc: "Not much is known about this particle. Where did it come from? Why is it hostile? And why is it so tough?",
         hp: 2990,
         xp: 3200,
         dmg: 400,
@@ -284,6 +286,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     16: {
         id: 16,
         name: "W Boson",
+        desc: "It is unsure whether its name is meant to be a compliment or an insult, so it tends to alternate between thinking positively & negatively.",
         hp: "1e14",
         xp: "3e14",
         dmg: "1.4e9",
@@ -299,6 +302,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     17: {
         id: 17,
         name: "Z Boson",
+        desc: "At first, we thought this was a neutron, but it was masking itself as one through its neutrality.",
         hp: "4e14",
         xp: "1e15",
         dmg: "1.2e9",
@@ -359,6 +363,7 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
     21: {
         id: 21,
         name: "Bottom Antiquark",
+        desc: "Is the antiparticle of the top quark the bottom antiquark or the top antiquark? This inversion stuff is confusing...",
         hp: "1.8e18",
         xp: "4e18",
         dmg: "3e8",

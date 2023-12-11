@@ -12,8 +12,13 @@ function bestStageLimitSC(n: DecimalSource): Decimal {
     if (Decimal.lte(n, 25)) return new Decimal(n);
 	return Decimal.pow(n, 0.75).times(Math.sqrt(5));
 }
+function invBestStageLimitSC(n: Decimal): Decimal {
+    if (Decimal.lte(n, 25)) return n;
+    return Decimal.div(n, Math.sqrt(5)).root(.75);
+}
 
 export const bestiaryLimit = computed(() => bestStageLimitSC(player.bestStage).div(5).root(1.1).plus(1).floor().min(Object.keys(ENEMY_DATA).length).toNumber());
+export const nextBestiaryLimit = computed(() => invBestStageLimitSC(Decimal.pow(bestiaryLimit.value, 1.1).times(5)).ceil());
 export const bestiaryChosen = computed(() => Object.values(player.bestiaryChosen).filter(x => x).length);
 
 export const trophyEffects = computed(() => objectMapK(ENEMY_DATA, e => {
