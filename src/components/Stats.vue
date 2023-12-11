@@ -104,7 +104,7 @@ const guideData: { name: string, unl: boolean | ComputedRef<boolean>, descRows: 
     {
         name: "Ranks",
         unl: computed(() => Decimal.gte(player.bestStage, 25)),
-        descRows: ["Enemy ranks magnify their strength.", "Each rank after 1 multiplies their HP & DMG by 2.5."]
+        descRows: ["Enemy ranks magnify their strength.", "Each rank after 1 multiplies their HP, DMG, & XP/Trophy gain by 2.5."]
     },
     {
         name: "Trophy Sacrifice",
@@ -114,7 +114,7 @@ const guideData: { name: string, unl: boolean | ComputedRef<boolean>, descRows: 
     {
         name: "Alternate Enemy Forms",
         unl: computed(() => Decimal.gte(player.bestStage, 81)),
-        descRows: ["There are alternate forms of existing enemies, such as antiparticles.", "As such, rather than having their own trophies, they give much higher amounts of trophies of their regular counterparts."]
+        descRows: ["There are alternate forms of existing enemies, such as antiparticles.", "As such, rather than having their own trophies, they give much higher amounts of trophies of their regular counterparts (6e16x).", "These alternate enemy forms also drop the equivalent amount of sacrificed trophies."]
     }
 ]
 
