@@ -54,9 +54,12 @@ export const spd = computed(() => {
 export const critChance = computed(() => getTrophyEff(9));
 export const critMult = computed(() => new Decimal(5));
 
+export const sigmoid2 = (x: DecimalSource) => Decimal.div(1, Decimal.add(1, Decimal.exp(Decimal.neg(x)))).sub(0.5);
+export const interp = (b: DecimalSource) => critMult.value.plus(Decimal.add(1, Decimal.mul(critMult.value, critChance.value)).times(2).times(sigmoid2(Decimal.sub(b, 1).div(3))));
+
 export function playerAtk(bulk: DecimalSource) {
 	const isCrit = Decimal.lt(Math.random(), critChance.value.root(bulk));
-	let eDmg = dmg.value.times(bulk).times(isCrit ? critMult.value.max(1).sub(1).div(bulk).plus(1) : 1).times(1 - enemyBlock.value);
+	let eDmg = dmg.value.times(bulk).times(isCrit ? (Decimal.gte(bulk, 20) ? Decimal.add(1, Decimal.mul(critMult.value, critChance.value)) : interp(bulk)) : 1).times(1 - enemyBlock.value);
 	if (enemyData.value.special.includes("shield") && eDmg.lt(Decimal.div(enemyTotalHP.value, 10)) && !isCrit) eDmg = new Decimal(0);
 	
 	player.playerAttacks = Decimal.add(player.playerAttacks, bulk);
