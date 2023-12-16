@@ -4,6 +4,7 @@ import { STAGE_DATA } from "../data/stageData";
 import { formatWhole } from "./format";
 import { trySeeEnemy } from "./loop";
 import { player } from "./playerControl";
+import { getRealmModifierPower } from "./realms";
 
 export const stageData = computed(() => getStageData(player.stage));
 export const enemiesInStage = computed(() => stageData.value.data.length);
@@ -15,7 +16,8 @@ export function getStageData(stage: DecimalSource) {
     let data = STAGE_DATA[activeStage.toString()];
     let rank = Decimal.sub(stage, 1).div(totalStages).floor().times(Math.floor(totalStages * 3 / 4))
             .plus(Decimal.sub(stage, 1).sub(totalStages).times(3 / 4).floor().max(0))
-            .plus(data[new Decimal(player.enemiesDefeated).toNumber() % data.length][1]);
+            .plus(data[new Decimal(player.enemiesDefeated).toNumber() % data.length][1])
+			.plus(getRealmModifierPower("Superranked")).sub(1);
 
     let mag = Decimal.pow(2.5, rank.sub(1));
     return {data, rank, mag};   

@@ -18,7 +18,7 @@
         <q-card class="bg-blue-grey-15" style="padding: 5px; max-width: 15em; margin: 0 auto;">
             <img :src="enemyData.img" :style="{filter: enemyData.filter ?? 'none'}" style="width: 128px; height: 128px; margin: 0 auto;" /><br>
             <span :style="{color: enemyData.nameColor ?? 'white', filter: enemyData.filter ?? 'none'}">
-                {{enemyData.name}} {{stageData.rank.gt(1) ? ("[Rk "+ formatWhole(stageData.rank) +"]") : ""}}</span><br>
+                {{enemyData.name}} {{stageData.rank.neq(1) ? ("[Rk "+ formatWhether(stageData.rank) +"]") : ""}}</span><br>
             HP: <b>{{formatWhole(Decimal.sub(enemyTotalHP, player.damageDealt).max(0))}} / {{formatWhole(enemyTotalHP)}}</b><br>
             DMG: <b>{{formatWhole(enemyRealDMG)}}</b>, SPD: <b>{{format(enemyRealSPD)}}</b><br>
             <span v-if="enemyData.special.length > 0">
@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import Decimal from 'break_eternity.js';
-import { formatWhole, format } from '../game/format';
+import { formatWhole, format, formatWhether } from '../game/format';
 import { level, nextLevel, hp, dmg, spd } from '../game/player';
 import { player } from '../game/playerControl';
 import { prevStage, nextStage, getStageName, enemiesInStage, stageData } from '../game/stage';

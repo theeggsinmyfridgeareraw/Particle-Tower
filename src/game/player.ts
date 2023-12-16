@@ -1,18 +1,19 @@
 import { computed } from "vue";
 import { player } from "./playerControl";
 import Decimal, { DecimalSource } from "break_eternity.js";
-import { enemyAtk, enemyBlock, enemyData, enemyRealSPD, enemyTotalHP } from "./enemy";
+import { enemyAtk, enemyBlock, enemyData, enemyTotalHP } from "./enemy";
 import { getTrophyEff } from "./trophies";
+import { getRealmModifierPower, realmShardEff } from "./realms";
 
 export const levelReqData = computed(() => ({
     base: 5, 
-    exp: 1.02
+    exp: Decimal.add(1.02, getRealmModifierPower("Experienced")).sub(1)
 }));
 
 export const level = computed(() => Decimal.max(player.xp, 1).log(levelReqData.value.base).root(levelReqData.value.exp).plus(1).floor());
 export const nextLevel = computed(() => Decimal.pow(levelReqData.value.base, level.value.pow(levelReqData.value.exp)).ceil());
 
-export const xpMult = computed(() => getTrophyEff(15));
+export const xpMult = computed(() => getTrophyEff(15).times(getTrophyEff(7, 4)).times(realmShardEff.value).times(getRealmModifierPower("Experienced")));
 export const trophyMult = computed(() => getTrophyEff(15));
 
 export const hp = computed(() => { 
@@ -48,7 +49,7 @@ export const spd = computed(() => {
 	spd = spd.times(getTrophyEff(14));
 
 	if (enemyData.value.special.includes("charm")) spd = spd.div(Decimal.pow(1.1, Decimal.sqrt(player.enemyAttacks)));
-	return spd;
+	return spd.div(getRealmModifierPower("Shellshocked"));
 });
 
 export const critChance = computed(() => getTrophyEff(9));

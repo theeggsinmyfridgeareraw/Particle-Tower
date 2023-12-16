@@ -1,5 +1,6 @@
 import { DecimalSource } from "break_eternity.js";
 import { reactive } from "vue";
+import { RealmPlayerData, initRealmPlayerData } from "./realms";
 
 export const player: Player = reactive(getStartPlayer());
 
@@ -25,7 +26,8 @@ interface Player {
     trophySacDisabled: Record<number, boolean>,
 	guideRecords: {
 		enemies: Record<number, boolean>
-	}
+	},
+	realms: RealmPlayerData
 }
 
 export function getStartPlayer(): Player {
@@ -51,6 +53,7 @@ export function getStartPlayer(): Player {
 		trophySacDisabled: {},
 		guideRecords: {
 			enemies: {}
-		}
+		},
+		realms: initRealmPlayerData()
 	};
 }

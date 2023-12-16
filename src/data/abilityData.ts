@@ -55,5 +55,9 @@ export const ABILITY_DATA: Record<string, AbilityData> = {
     "reductive": {
         name: "Reductive",
         desc: "Divides player HP & DMG by X. X starts at 1, but increases by a millionth every time the player attacks."
+    },
+    "drain": {
+        name: "Drain",
+        desc: "Effectively reduces all Trophy amounts by X% every time this enemy attacks (stacks multiplicatively), where X is the number of normal trophy types that are enabled."
     }
 }

@@ -43,10 +43,19 @@ import { bestiaryChosen, bestiaryLimit, toggleTrophy, getTrophyGenUpgCost, buyTr
 import Decimal, { DecimalSource } from 'break_eternity.js';
 import { resetStage } from '../game/stage';
 
+const swaps: {[key: number]: number} = {
+    24: 18,
+    18: 24
+}
+
+const swapKey = (key: number) => Object.keys(swaps).includes(key.toString()) ? swaps[key] : key;
+
 const reducedBestiary = (r: number) => {
-    const keys = Object.keys(player.bestiary).map(n => Number(n));
-    return keys.reduce((result: Record<number, DecimalSource>, key: number) => { 
-        if (key > (6*(r-1))&&key<=r*6) result[key] = player.bestiary[key]; 
+    const keys = Object.keys(player.bestiary).map(n => [Number(n), swapKey(Number(n))]);
+    return keys.reduce((result: Record<number, DecimalSource>, key: number[]) => {
+        if (key[1] > (6*(r-1))&&key[1]<=r*6) {
+            result[key[0]] = player.bestiary[key[0]];
+        }
         return result; 
     }, {} as Record<number, DecimalSource>);
 };

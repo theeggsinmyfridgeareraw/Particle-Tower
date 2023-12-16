@@ -4,8 +4,11 @@ import Main from "../components/Main.vue";
 import Trophies from "../components/Trophies.vue";
 import Stats from "../components/Stats.vue";
 import { player } from "../game/playerControl";
+import Decimal from "break_eternity.js";
+import { realmGoal } from "../game/realms";
+import Realms from "../components/Realms.vue";
 
-type Tab = "Options" | "Stats" | "Main" | "Trophies";
+type Tab = "Options" | "Stats" | "Main" | "Trophies" | "Realms";
 export const currentTab = ref<Tab>("Main");
 
 interface TabData {
@@ -39,5 +42,11 @@ export const tabData: Record<Tab, TabData> = {
         unl: computed(() => Object.keys(player.bestiary).length >= 1),
         color: "amber-10",
         component: Trophies
+    },
+    Realms: {
+        name: "Realms",
+        unl: computed(() => Decimal.gt(player.bestStage, realmGoal.value) || Decimal.gte(player.realms.number, 1)),
+        color: "pink-6",
+        component: Realms
     }
 };

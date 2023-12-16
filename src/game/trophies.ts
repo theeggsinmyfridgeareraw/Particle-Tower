@@ -5,6 +5,8 @@ import { objectMapK } from "../util/helpers";
 import { player } from "./playerControl";
 import { resetStage } from "./stage";
 import { trophySacUnl } from "./trophySac";
+import { enemyData } from "./enemy";
+import { getRealmModifierPower } from "./realms";
 
 export type StackType = "add" | "mult" | "multAfter1";
 
@@ -21,13 +23,21 @@ export const bestiaryLimit = computed(() => bestStageLimitSC(player.bestStage).d
 export const nextBestiaryLimit = computed(() => invBestStageLimitSC(Decimal.pow(bestiaryLimit.value, 1.1).times(5)).ceil());
 export const bestiaryChosen = computed(() => Object.values(player.bestiaryChosen).filter(x => x).length);
 
+export const bestiaryAmtMultPreGhost = computed(() => getTrophyEff(24).sub(1).times(player.bestStage).plus(1).max(1));
+export const bestiaryAmtDiv = computed(() => enemyData.value.special.includes("drain") ? Decimal.pow(bestiaryChosen.value / 100 + 1, player.enemyAttacks) : Decimal.dOne);
+
+export function modifyBestiaryAmt(amt: DecimalSource, id: number): Decimal {
+    const modified = Decimal.div(amt, bestiaryAmtDiv.value);
+    return id < 24 ? modified.times(bestiaryAmtMultPreGhost.value) : modified;
+}
+
 export const trophyEffects = computed(() => objectMapK(ENEMY_DATA, e => {
-        return fromEnemyData(Number(e), "trophyEff")?.(new Decimal(player.bestiaryChosen[Number(e)] ? (player.bestiary[Number(e)] ?? 0) : 0))
+        return fromEnemyData(Number(e), "trophyEff")?.(new Decimal(player.bestiaryChosen[Number(e)] ? modifyBestiaryAmt(player.bestiary[Number(e)] ?? 0, Number(e)) : 0))
             ?? Decimal.dZero
         }
     ));
 export const trophySacEffects = computed(() => objectMapK(ENEMY_DATA, e => {
-        return fromEnemyData(Number(e), "sacEff")?.(new Decimal(trophySacUnl(Number(e)) && !player.trophySacDisabled[Number(e)] ? (player.trophySac[Number(e)] ?? 0) : 0)) 
+        return fromEnemyData(Number(e), "sacEff")?.(new Decimal(trophySacUnl(Number(e)) && !player.trophySacDisabled[Number(e)] ? modifyBestiaryAmt(player.trophySac[Number(e)] ?? 0, Number(e)) : 0)) 
             ?? Decimal.dZero
         }
     ));
@@ -47,12 +57,12 @@ function fuseEffects(e1: Decimal, e2: Decimal, type: StackType) {
 }
 
 export function getTrophyEff(id: number, b = 2) { 
-    if (b == 0) return fromEnemyData(id, "trophyEff")?.(new Decimal(player.bestiary[id]||0)) ?? Decimal.dZero;
-    if (b == 1) return fromEnemyData(id, "sacEff")?.(new Decimal(player.trophySac[id]||0)) ?? Decimal.dZero;
-    if (b == 3) return trophyEffects.value[id.toString()];
-    if (b == 4) return trophySacEffects.value[id.toString()];
+    if (b == 0) return fromEnemyData(id, "trophyEff")?.(modifyBestiaryAmt(player.bestiary[id]||0, id)) ?? Decimal.dZero;
+    if (b == 1) return fromEnemyData(id, "sacEff")?.(modifyBestiaryAmt(player.trophySac[id]||0, id)) ?? Decimal.dZero;
+    if (b == 3) return trophyEffects.value?.[id.toString()] ?? fromEnemyData(id, "trophyEff")?.(modifyBestiaryAmt(player.bestiary[id]||0, id)) ?? Decimal.dZero;
+    if (b == 4) return trophySacEffects.value[id.toString()] ?? fromEnemyData(id, "sacEff")?.(modifyBestiaryAmt(player.trophySac[id]||0, id)) ?? Decimal.dZero;
 
-    return fuseEffects(trophyEffects.value[id.toString()], trophySacEffects.value[id.toString()], fromEnemyData(id, "stackType") ?? "mult");
+    return fuseEffects(trophyEffects.value?.[id.toString()] ?? fromEnemyData(id, "trophyEff")?.(modifyBestiaryAmt(player.bestiary[id]||0, id)) ?? Decimal.dZero, trophySacEffects.value?.[id.toString()] ?? fromEnemyData(id, "sacEff")?.(modifyBestiaryAmt(player.trophySac[id]||0, id)) ?? Decimal.dZero, fromEnemyData(id, "stackType") ?? "mult");
 };
 
 export function getTrophyGenUpgCost(id: number) {
@@ -61,7 +71,7 @@ export function getTrophyGenUpgCost(id: number) {
 
 export function getTrophyGen(id: number) {
     if (Decimal.lte(player.bestiaryGenUpgs[id]||0, 0)) return 0;
-    return Decimal.pow(id+6, Decimal.sub(player.bestiaryGenUpgs[id]||0, 1)).div(2.5).max(player.bestiaryGenUpgs[id]||0).max(0);
+    return Decimal.pow(id+6, Decimal.sub(player.bestiaryGenUpgs[id]||0, 1)).div(2.5).max(player.bestiaryGenUpgs[id]||0).max(0).div(getRealmModifierPower("Trophiless"));
 }
 
 export function buyTrophyGenUpg(id: number) {

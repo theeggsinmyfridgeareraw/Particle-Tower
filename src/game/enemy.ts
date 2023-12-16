@@ -4,6 +4,7 @@ import { ENEMY_DATA, EveryEnemyData } from "../data/enemyData";
 import { player } from "./playerControl";
 import { stageData } from "./stage";
 import { getTrophyEff } from "./trophies";
+import { getRealmModifierPower } from "./realms";
 
 export const enemyData = computed(() => ENEMY_DATA[new Decimal(stageData.value.data[
         new Decimal(player.enemiesDefeated).toNumber()%stageData.value.data.length
@@ -36,7 +37,7 @@ function adjustEnemyDMG(dmg: DecimalSource) {
 
 	if (player.bestiaryChosen[16]) dmg = Decimal.mul(dmg, Decimal.pow(1.1, player.enemyAttacks));
 
-	if (enemyData.value.special.includes("mutator")) return dmg;
+	if (enemyData.value.special.includes("mutator")) return Decimal.mul(dmg, getRealmModifierPower("Overexposed"));
 
 	dmg = Decimal.div(dmg, getTrophyEff(4));
 	dmg = Decimal.div(dmg, getTrophyEff(16));
@@ -52,11 +53,11 @@ function adjustEnemySPD(spd: DecimalSource) {
 	if (enemyData.value.special.includes("mutator")) return spd;
 
 	spd = Decimal.div(spd, getTrophyEff(6, 3));
-	return spd;
+	return spd.mul(getRealmModifierPower("Shellshocked"));
 }
 
 export function adjustEnemyHP(hp: DecimalSource) {
-	if (enemyData.value.special.includes("mutator")) return hp;
+	if (enemyData.value.special.includes("mutator")) return Decimal.mul(hp, getRealmModifierPower("Overexposed"));
 
 	hp = Decimal.div(hp, getTrophyEff(13));
 	return hp;
@@ -71,6 +72,6 @@ export function enemyAtk(bulk: DecimalSource) {
 
 export function attemptEnemyHeal(bulk: DecimalSource) {
 	if (enemyData.value.special.includes("heal") && (Math.random() < (1 - getTrophyEff(11).toNumber()))) {
-		player.damageDealt = Decimal.sub(player.damageDealt, Decimal.mul(enemyRealDMG.value, bulk).div(getTrophyEff(8))).max(0)
+		player.damageDealt = Decimal.sub(player.damageDealt, Decimal.mul(enemyRealDMG.value, bulk).times(getTrophyEff(7, 4)).div(getTrophyEff(8))).max(0)
 	}
 }

@@ -2,6 +2,7 @@ import Decimal, { DecimalSource } from "break_eternity.js";
 import { format, formatSmall } from "../game/format";
 import { level } from "../game/player";
 import { getTrophyEff, StackType } from "../game/trophies";
+import { player } from "../game/playerControl";
 
 interface BasicEnemyData {
     id: number,
@@ -151,9 +152,10 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
         special: ["stun"],
         trophyDesc(b) { return "Heals "+format(getTrophyEff(7, b))+" HP per second" },
         trophyEff(x) { return x.plus(1).log2().div(2).times(x.div(10).plus(1).cbrt()) },
-        sacEff(x) { return x.div(1e7).plus(1).log2().div(3).times(x.div(1e9).plus(1).root(4)) },
+        sacDesc(b) { return "Multiplies XP gain & all healing by " + format(getTrophyEff(7, b)) },
+        sacEff(x) { return x.div(1e7).plus(1).log2().plus(1) },
         sacReq: 3.2e7,
-        stackType: "add"
+        stackType: "mult"
     },
     8: {
         id: 8,
@@ -389,6 +391,37 @@ export const ENEMY_DATA: Record<number, TotalEnemyData> = {
         filter: "hue-rotate(180deg)",
         nameColor: "lightblue",
         trophyMult: "6e16"
+    },
+    23: {
+        id: 23,
+        name: "Top Antiquark",
+        desc: "Not the most levelheaded antiparticle of the group, but does round off the cast. It always lies, so it is often requested to participate in logic experiments.",
+        hp: "4e18",
+        xp: "1.2e19",
+        dmg: "3e8",
+        spd: 12,
+        img: "images/top_quark.png",
+        special: ["counter", "regenerator"],
+        mutates: 5,
+        filter: "hue-rotate(180deg)",
+        nameColor: "lightblue",
+        trophyMult: "6e16"
+    },
+    24: {
+        id: 24,
+        name: "F-P Ghost",
+        desc: "Well this proves that ghosts exist, so I suppose this particle is solely responsible for all the supposed supernatural occurrences in the world that haven't been debunked. And no, none of them contradict each other, don't think about it too hard.",
+        hp: "5e20",
+        xp: "1e22",
+        dmg: "1e10",
+        spd: 0.9,
+        img: "images/fp_ghost.png",
+        special: ["mutator", "drain"],
+        trophyDesc(b) { return "Increase all previous effective Trophy amounts by " + format(getTrophyEff(24, b).sub(1).times(100)) + "% per Stage reached (total: " + format(getTrophyEff(24, b).sub(1).times(player.bestStage).plus(1).max(1)) + "x)." },
+        trophyEff(x) { return x.times(1.4).plus(1).root(1e3) },
+        sacEff(x) { return x.div("1e11").plus(1).root(1e4) },
+        sacReq: "6.4e10",
+        stackType: "mult"
     }
 };
 
