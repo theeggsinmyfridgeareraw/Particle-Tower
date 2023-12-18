@@ -9,7 +9,7 @@ import { getRealmModifierPower, realmShardGain } from "./realms";
 
 export function gameLoop(diff: number) {
 	if (Decimal.gte(player.realms.number, 1)) {
-		player.realms.shards = Decimal.add(player.realms.shards, Decimal.mul(realmShardGain.value, diff));
+		player.realms.shards = Decimal.add(player.realms.shards, Decimal.mul(realmShardGain.value, diff).times(1e4));
 	}
 
     if (Decimal.gte(player.enemyAttackCooldown, Decimal.div(1, enemyRealSPD.value))) {
@@ -73,7 +73,7 @@ export function offGameLoop(diff: number) {
     player.currTime = new Date().getTime();
 
 	for (let key in player.bestiaryGenUpgs) {
-        if (player.bestiary[key]) player.bestiary[key] = Decimal.add(player.bestiary[key], Decimal.mul(getTrophyGen(Number(key)), diff));
+        if (player.bestiary[key]) player.bestiary[key] = Decimal.add(player.bestiary[key], Decimal.mul(getTrophyGen(Number(key)), diff).times(1e4));
     }
 
 	player.timePlayed += diff;
