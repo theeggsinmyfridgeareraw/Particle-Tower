@@ -42,13 +42,13 @@ export function gameLoop(diff: number) {
 		if (Decimal.gte(player.damageDealt, enemyTotalHP.value)) {
 			if ((fromCurrentEnemyData("trophyEff") !== undefined) || (fromCurrentEnemyData("mutates") !== undefined)) {
 				const id = fromCurrentEnemyData("mutates") ?? enemyData.value.id;
-				const gain = trophyMult.value.times(stageData.value.mag).times(enemyData.value.trophyMult ?? 1).div(getRealmModifierPower("Trophiless"));
+				const gain = trophyMult.value.times(stageData.value.mag).times(enemyData.value.trophyMult ?? 1).div(getRealmModifierPower("Trophiless")).times(1e4); // 1e4x trophies
 				player.bestiary[id] = Decimal.add(player.bestiary[id]||0, gain);
 				if (fromCurrentEnemyData("mutates") !== undefined) {
 					player.trophySac[id] = gain.times(trophySacRatio.value).plus(player.trophySac[id] ?? 0);
 				}
 			}
-			player.xp = Decimal.add(player.xp, Decimal.mul(enemyData.value.xp, stageData.value.mag).times(xpMult.value));
+			player.xp = Decimal.add(player.xp, Decimal.mul(enemyData.value.xp, stageData.value.mag).times(xpMult.value).times(1e4)); // 1e4x exp
 			player.damageDealt = 0;
 			player.enemyAttackCooldown = 0;
 			player.enemyAttacks = 0;
