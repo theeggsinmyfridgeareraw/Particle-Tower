@@ -5,7 +5,7 @@ import { player } from "./playerControl";
 import { resetStage } from "./stage";
 
 export function trophySacUnl(id: number) {
-    return Decimal.gte(player.bestStage, 50 + Math.pow(Number(id), 2));
+    return Decimal.gte(player.bestStage));
 }
 
 export function trophySacReq(id: number) {
